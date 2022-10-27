@@ -15,10 +15,11 @@ def open_zip(path : str) -> None:
 def open_tf_file(path : str) -> None:
     file_path = glob.glob(path+'\**\*.tf',recursive=True)
     ##.tf 파일을 열고 이 내용을 file_path : file 형태로 dictonary로 저장함.
-    for path in file_path:
-        with open(path,'r', encoding='UTF-8') as file:
-            value = hcl2.load(file)
-            if "module" in value: find_tf_module({'key':path,'value':value})
+    if file_path:
+        for path in file_path:
+            with open(path,'r', encoding='UTF-8') as file:
+                value = hcl2.load(file)
+                if "module" in value: find_tf_module({'key':path,'value':value})
 
 #module에서 cidr_block찾는다.
 def find_tf_module(tf_dict: dict):
